@@ -1,0 +1,38 @@
+2019-09-07 12:41:28.219 [main] INFO  com.springboot.weking.Wk01Application - Starting Wk01Application v0.0.1-SNAPSHOT on weking with PID 11184 (D:\workspace\IntelliJ IDEA 2019.1\wk-01\target\wk-01-0.0.1-SNAPSHOT.jar started by weking in D:\workspace\IntelliJ IDEA 2019.1\wk-01\target)
+2019-09-07 12:41:28.229 [main] INFO  com.springboot.weking.Wk01Application - No active profile set, falling back to default profiles: default
+2019-09-07 12:41:31.409 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$c4504ab7] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-07 12:41:31.689 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.apache.camel.spring.boot.CamelAutoConfiguration' of type [org.apache.camel.spring.boot.CamelAutoConfiguration$$EnhancerBySpringCGLIB$$e67a10d6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-07 12:41:34.549 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8180 (http)
+2019-09-07 12:41:34.589 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8180"]
+2019-09-07 12:41:34.609 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2019-09-07 12:41:34.609 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-09-07 12:41:34.799 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/wk01] - Initializing Spring embedded WebApplicationContext
+2019-09-07 12:41:34.800 [main] INFO  org.springframework.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 6471 ms
+2019-09-07 12:41:35.952 [main] INFO  o.apache.camel.impl.converter.DefaultTypeConverter - Type converters loaded (core: 195, classpath: 1)
+2019-09-07 12:41:37.679 [main] WARN  org.thymeleaf.templatemode.TemplateMode - [THYMELEAF][main] Template Mode 'HTML5' is deprecated. Using Template Mode 'HTML' instead.
+2019-09-07 12:41:37.975 [main] INFO  org.apache.camel.spring.boot.RoutesCollector - Loading additional Camel XML routes from: classpath:camel/*.xml
+2019-09-07 12:41:37.977 [main] INFO  org.apache.camel.spring.boot.RoutesCollector - Loading additional Camel XML rests from: classpath:camel-rest/*.xml
+2019-09-07 12:41:37.997 [main] INFO  org.apache.camel.spring.SpringCamelContext - Apache Camel 2.22.0 (CamelContext: camel-1) is starting
+2019-09-07 12:41:38.001 [main] INFO  o.a.camel.management.ManagedManagementStrategy - JMX is enabled
+2019-09-07 12:41:38.309 [main] INFO  org.apache.camel.spring.SpringCamelContext - StreamCaching is not in use. If using streams then its recommended to enable stream caching. See more details at http://camel.apache.org/stream-caching.html
+2019-09-07 12:41:38.316 [main] INFO  org.apache.camel.spring.SpringCamelContext - Total 0 routes, of which 0 are started
+2019-09-07 12:41:38.318 [main] INFO  org.apache.camel.spring.SpringCamelContext - Apache Camel 2.22.0 (CamelContext: camel-1) started in 0.321 seconds
+2019-09-07 12:41:38.327 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8180"]
+2019-09-07 12:41:38.397 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8180 (http) with context path '/wk01'
+2019-09-07 12:41:38.407 [main] INFO  com.springboot.weking.Wk01Application - Started Wk01Application in 10.904 seconds (JVM running for 11.632)
+2019-09-07 12:41:38.409 [main] INFO  com.springboot.weking.runner.CamelRunner - 【文件传输组件】开始运行....
+2019-09-07 12:41:38.539 [main] ERROR com.alibaba.druid.pool.DruidDataSource - testWhileIdle is true, validationQuery not set
+2019-09-07 12:41:38.551 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2019-09-07 12:41:39.583 [main] WARN  org.apache.camel.component.file.FileEndpoint - Cannot auto create starting directory: E:\app-zcpt\app-data\send\sw_qp
+2019-09-07 12:41:39.769 [main] INFO  org.apache.camel.spring.SpringCamelContext - Route: route1 started and consuming from: file://E:/app-zcpt/app-data/send/sw_qp
+2019-09-07 12:41:39.774 [main] INFO  com.springboot.weking.runner.CamelRunner - >> 文件上传服务：IP：10.8.49.5 ，PORT：2121，用户【tba】，本地路径：E:/app-zcpt/app-data/send/sw_qp
+2019-09-07 12:41:39.804 [main] WARN  org.apache.camel.component.file.FileEndpoint - Cannot auto create starting directory: E:\app-zcpt\app-data\send\sw_hzw
+2019-09-07 12:41:39.819 [main] INFO  org.apache.camel.spring.SpringCamelContext - Route: route2 started and consuming from: file://E:/app-zcpt/app-data/send/sw_hzw
+2019-09-07 12:41:39.827 [main] INFO  com.springboot.weking.runner.CamelRunner - >> 文件上传服务：IP：10.8.232.134 ，PORT：2121，用户【tba-hzw】，本地路径：E:/app-zcpt/app-data/send/sw_hzw
+2019-09-07 12:41:39.834 [main] INFO  com.springboot.weking.runner.FtpServerRunner - 【文件服务器】开始运行....
+2019-09-07 12:41:39.901 [main] INFO  c.s.weking.cmp.ftp.service.FtpManagerService - >> 共享用户名：tba
+2019-09-07 12:41:39.901 [main] INFO  com.springboot.weking.runner.FtpServerRunner - >> 添加共享用户【tba】，指定目录:E:/app-zcpt/app-data/receive/sw_qp
+2019-09-07 12:41:39.911 [main] INFO  c.s.weking.cmp.ftp.service.FtpManagerService - >> 共享用户名：tba
+2019-09-07 12:41:39.911 [main] INFO  com.springboot.weking.runner.FtpServerRunner - >> 添加共享用户【tba】，指定目录:E:/test
+2019-09-07 12:41:40.032 [main] INFO  org.apache.ftpserver.impl.DefaultFtpServer - FTP server started
+2019-09-07 12:41:40.032 [main] INFO  com.springboot.weking.runner.FtpServerRunner - >> 数据共享交换服务启动成功！

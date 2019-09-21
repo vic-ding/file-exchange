@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment :: header"></head>
+
+
+<script type="text/javascript" th:src="@{/static/plugins/expand/validator-expand.js}"></script>
+<script type="text/javascript" th:src="@{/static/scripts/jquery.validate.min.js}"></script>
+
+<style>
+    .layui-input-block {
+        margin-right: 50px;
+    }
+
+    #nodeCode-error {
+        display: inline-table !important;
+        position: absolute;
+        z-index: 299;
+        left: 540px;
+        top: 9px;
+    }
+
+    .error {
+        color: red;
+    }
+    .layui-input, .layui-textarea {
+        width: 68%;
+    }
+</style>
+<script type="text/javascript">
+    layui.use(['form', 'layedit'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit;
+
+
+        //创建一个编辑器
+        var editIndex = layedit.build('text_editor');
+        //自定义验证规则
+        form.verify({
+            content: function () {
+                layedit.sync(editIndex);
+            }
+        });
+
+        // 监听提交
+        form.on('submit(submitData)', function (data) {
+            var _url = ctx + "gx/node/add";
+            $.ajax({
+                url: _url,
+                type: 'POST',
+                data: data.field,
+                success: function () {
+                    layer.msg("提交成功！");
+                    setTimeout(function () {
+                        parent.location.reload(); // 父页面刷新
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    }, 1000);
+                }
+            });
+            return false;
+        });
+
+        $("#btnClose").click(function () {
+            parent.layer.closeAll();
+        });
+
+    })
+</script>
+<body style="padding: 20px;">
+<form class="layui-form" action="" id="mainForm">
+    <div class="layui-form-item">
+        <label class="layui-form-label">节点编码</label>
+        <div class="layui-input-block" style="position: relative;">
+            <input type="text" name="nodeCode" autocomplete="off" placeholder="请输入节点编码（唯一性）" class="layui-input"
+                   id="nodeCode">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">节点名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="nodeDefinition" autocomplete="off" placeholder="请输入节点名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">节点IP</label>
+        <div class="layui-input-block">
+            <input type="text" name="gxNodeIP" autocomplete="off" placeholder="请输入节点IP" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">节点端口</label>
+        <div class="layui-input-block">
+            <input type="text" name="gxNodePort" autocomplete="off" placeholder="请输入节点端口" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">节点URL</label>
+        <div class="layui-input-block">
+            <input type="text" name="nodeUrl" autocomplete="off" placeholder="请输入节点URL" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">说明</label>
+        <div class="layui-input-block">
+            <textarea class="layui-textarea layui-hide" name="nodeDesc" lay-verify="content" id="text_editor"
+                      placeholder="请输入相关说明"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="text-align: right;">
+            <button class="layui-btn" lay-submit="" lay-filter="submitData">提交</button>
+            <button class="layui-btn layui-btn-primary" lay-filter="siteInfo" id="btnClose">取消</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

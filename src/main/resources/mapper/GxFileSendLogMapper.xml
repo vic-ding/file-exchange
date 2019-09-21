@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springboot.weking.app.gx.dao.GxFileSendLogDao">
+    <resultMap id="BaseResultMap" type="com.springboot.weking.app.gx.model.GxFileSendLog">
+        <id column="SND_LSH" property="sndLsh" jdbcType="VARCHAR"/>
+        <result column="SND_CODE" property="sndCode" jdbcType="VARCHAR"/>
+        <result column="RCV_CODE" property="rcvCode" jdbcType="VARCHAR"/>
+        <result column="SND_TYPE" property="sndType" jdbcType="VARCHAR"/>
+        <result column="SND_STATUS" property="sndStatus" jdbcType="VARCHAR"/>
+        <result column="SND_FILENAME" property="sndFilename" jdbcType="VARCHAR"/>
+        <result column="SND_TIME" property="sndTime" jdbcType="TIMESTAMP"/>
+        <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="SND_TOTAL" property="sndTotal" jdbcType="DECIMAL"/>
+        <result column="SUC_NUM" property="sucNum" jdbcType="DECIMAL"/>
+        <result column="ERR_NUM" property="errNum" jdbcType="DECIMAL"/>
+        <result column="ERR_MESSAGE" property="errMessage" jdbcType="VARCHAR"/>
+        <result column="MODI_TIME" property="modiTime" jdbcType="TIMESTAMP"/>
+        <result column="NODE_NAME" property="eeNodeName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    SND_LSH, SND_CODE, RCV_CODE, SND_TYPE, SND_STATUS, SND_FILENAME, SND_TIME, END_TIME, 
+    SND_TOTAL, SUC_NUM, ERR_NUM, ERR_MESSAGE, MODI_TIME
+  </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from GX_FILE_SEND_LOG
+        where SND_LSH = #{sndLsh,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from GX_FILE_SEND_LOG
+    where SND_LSH = #{sndLsh,jdbcType=VARCHAR}
+  </delete>
+
+    <insert id="insert" parameterType="com.springboot.weking.app.gx.model.GxFileSendLog">
+    insert into GX_FILE_SEND_LOG (SND_LSH, SND_CODE, RCV_CODE, 
+      SND_TYPE, SND_STATUS, SND_FILENAME, 
+      SND_TIME, END_TIME, SND_TOTAL, 
+      SUC_NUM, ERR_NUM, ERR_MESSAGE
+      )
+    values (#{sndLsh,jdbcType=VARCHAR}, #{sndCode,jdbcType=VARCHAR}, #{rcvCode,jdbcType=VARCHAR}, 
+      #{sndType,jdbcType=VARCHAR}, #{sndStatus,jdbcType=VARCHAR}, #{sndFilename,jdbcType=VARCHAR}, 
+      #{sndTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{sndTotal,jdbcType=DECIMAL}, 
+      #{sucNum,jdbcType=DECIMAL}, #{errNum,jdbcType=DECIMAL}, #{errMessage,jdbcType=VARCHAR}
+     )
+  </insert>
+
+    <insert id="insertSelective" parameterType="com.springboot.weking.app.gx.model.GxFileSendLog">
+        insert into GX_FILE_SEND_LOG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sndLsh != null">
+                SND_LSH,
+            </if>
+            <if test="sndCode != null">
+                SND_CODE,
+            </if>
+            <if test="rcvCode != null">
+                RCV_CODE,
+            </if>
+            <if test="sndType != null">
+                SND_TYPE,
+            </if>
+            <if test="sndStatus != null">
+                SND_STATUS,
+            </if>
+            <if test="sndFilename != null">
+                SND_FILENAME,
+            </if>
+            <if test="sndTime != null">
+                SND_TIME,
+            </if>
+            <if test="endTime != null">
+                END_TIME,
+            </if>
+            <if test="sndTotal != null">
+                SND_TOTAL,
+            </if>
+            <if test="sucNum != null">
+                SUC_NUM,
+            </if>
+            <if test="errNum != null">
+                ERR_NUM,
+            </if>
+            <if test="errMessage != null">
+                ERR_MESSAGE,
+            </if>
+            <if test="modiTime != null">
+                MODI_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sndLsh != null">
+                #{sndLsh,jdbcType=VARCHAR},
+            </if>
+            <if test="sndCode != null">
+                #{sndCode,jdbcType=VARCHAR},
+            </if>
+            <if test="rcvCode != null">
+                #{rcvCode,jdbcType=VARCHAR},
+            </if>
+            <if test="sndType != null">
+                #{sndType,jdbcType=VARCHAR},
+            </if>
+            <if test="sndStatus != null">
+                #{sndStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="sndFilename != null">
+                #{sndFilename,jdbcType=VARCHAR},
+            </if>
+            <if test="sndTime != null">
+                #{sndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sndTotal != null">
+                #{sndTotal,jdbcType=DECIMAL},
+            </if>
+            <if test="sucNum != null">
+                #{sucNum,jdbcType=DECIMAL},
+            </if>
+            <if test="errNum != null">
+                #{errNum,jdbcType=DECIMAL},
+            </if>
+            <if test="errMessage != null">
+                #{errMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="modiTime != null">
+                #{modiTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.springboot.weking.app.gx.model.GxFileSendLog">
+        update GX_FILE_SEND_LOG
+        <set>
+            <if test="sndCode != null">
+                SND_CODE = #{sndCode,jdbcType=VARCHAR},
+            </if>
+            <if test="rcvCode != null">
+                RCV_CODE = #{rcvCode,jdbcType=VARCHAR},
+            </if>
+            <if test="sndType != null">
+                SND_TYPE = #{sndType,jdbcType=VARCHAR},
+            </if>
+            <if test="sndStatus != null">
+                SND_STATUS = #{sndStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="sndFilename != null">
+                SND_FILENAME = #{sndFilename,jdbcType=VARCHAR},
+            </if>
+            <if test="sndTime != null">
+                SND_TIME = #{sndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                END_TIME = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sndTotal != null">
+                SND_TOTAL = #{sndTotal,jdbcType=DECIMAL},
+            </if>
+            <if test="sucNum != null">
+                SUC_NUM = #{sucNum,jdbcType=DECIMAL},
+            </if>
+            <if test="errNum != null">
+                ERR_NUM = #{errNum,jdbcType=DECIMAL},
+            </if>
+            <if test="errMessage != null">
+                ERR_MESSAGE = #{errMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="modiTime != null">
+                MODI_TIME = #{modiTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where SND_LSH = #{sndLsh,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.springboot.weking.app.gx.model.GxFileSendLog">
+    update GX_FILE_SEND_LOG
+    set SND_CODE = #{sndCode,jdbcType=VARCHAR},
+      RCV_CODE = #{rcvCode,jdbcType=VARCHAR},
+      SND_TYPE = #{sndType,jdbcType=VARCHAR},
+      SND_STATUS = #{sndStatus,jdbcType=VARCHAR},
+      SND_FILENAME = #{sndFilename,jdbcType=VARCHAR},
+      SND_TIME = #{sndTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      SND_TOTAL = #{sndTotal,jdbcType=DECIMAL},
+      SUC_NUM = #{sucNum,jdbcType=DECIMAL},
+      ERR_NUM = #{errNum,jdbcType=DECIMAL},
+      ERR_MESSAGE = #{errMessage,jdbcType=VARCHAR},
+      MODI_TIME = #{modiTime,jdbcType=TIMESTAMP}
+    where SND_LSH = #{sndLsh,jdbcType=VARCHAR}
+  </update>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select gfsl.SND_LSH, gfsl.SND_CODE, gfsl.RCV_CODE, gfsl.SND_TYPE, gfsl.SND_STATUS, gfsl.SND_FILENAME, gfsl.SND_TIME, gfsl.END_TIME,
+    gfsl.SND_TOTAL, gfsl.SUC_NUM, gfsl.ERR_NUM, gfsl.ERR_MESSAGE, gfsl.MODI_TIME, gn.NODE_NAME
+        from GX_FILE_SEND_LOG gfsl
+        left join GX_NODE gn on gn.NODE_CODE = gfsl.RCV_CODE
+    </select>
+
+</mapper>

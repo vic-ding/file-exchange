@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment :: header"></head>
+
+<style th:replace="fragment::exchange-local"></style>
+
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+
+        // 节点管理
+        var tableNode = table.render({
+            elem: '#gx_node'
+            // 表格ID，必须设置，重载部分需要用到
+            , id: 'nodeReload'
+            , method: 'GET'
+            , url: ctx + "gx/node/list"
+            , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                //,curr: 5 //设定初始在第 5 页
+                , groups: 5 // 显示连续页码个数
+                , first: false //不显示首页
+                , last: false //不显示尾页
+
+            }
+            , height: '600'
+            // , toolbar: '#toolbarNode' //指向自定义工具栏模板选择器
+            , limit: 10
+            , limits: [10, 20, 50, 100]
+            , parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.total, //解析数据长度
+                    "data": res.rows //解析数据列表
+                };
+            }
+            , response: {
+                statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
+            }
+            , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            , cols: [
+                [
+                    {field: 'nodeCode', width: '15%', title: '节点编码'}
+                    , {field: 'nodeDefinition', width: '30%', title: '节点名称'}
+                    , {field: 'nodeUrl', width: '35%', title: '节点地址'}
+                    , {fixed: 'right', title: '操作', toolbar: '#barNode'}
+                ]
+            ]
+        });
+
+        // 新增节点页面
+        $("#addNode").click(function () {
+            //页面层
+            layer.open({
+                type: 2,
+                title: '新增节点信息',
+                area: ['1000px', '560px'], //宽高
+                content: 'gx_node_add.html'
+            });
+        });
+
+        // 监听行工具事件
+        table.on('tool(gx_node)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                // 询问层
+                layer.confirm('真的删除行么', function (index) {
+                    $.ajax({
+                        url: ctx + 'gx/node/delete?nodeCode=' + data.nodeCode,
+                        dataType: 'json',
+                        type: 'get',
+                        success: function () {
+                            tableNode.reload(); // 刷新表格
+                            layer.close(index);
+                        }
+                    });
+                });
+            } else if (obj.event === 'edit') {
+                //页面层
+                layer.open({
+                    type: 2,
+                    title: '编辑节点信息',
+                    area: ['1000px', '560px'], //宽高
+                    // content: 'gx_node_edit.html'
+                    content: ctx + 'gx/node/get?nodeCode=' + data.nodeCode
+                });
+            }
+        });
+
+
+        // 键盘抬起事件
+        // 输入框输入关键字自动查询数据
+        $(".container #nodeDefinitionInput").keyup(function () {
+            var nodeDefinitionInput = $('#nodeDefinitionInput').val();
+            table.reload('nodeReload', {
+                method: 'get'
+                , url: ctx + "gx/node/list/selective"
+                , where: {
+                    'nodeDefinition': nodeDefinitionInput
+                }
+                , page: {
+                    curr: 1
+                }
+            });
+        });
+
+
+        /**
+         * 目录管理
+         */
+        var tableFileDir = table.render({
+            elem: '#gx_dir'
+            // 表格ID，必须设置，重载部分需要用到
+            , id: 'fileDirReload'
+            , method: 'GET'
+            , url: ctx + "gx/file/dir/list"
+            , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                //,curr: 5 //设定初始在第 5 页
+                , groups: 5 // 显示连续页码个数
+                , first: false //不显示首页
+                , last: false //不显示尾页
+
+            }
+            , height: '600'
+            // , toolbar: '#toolbarDir' //指向自定义工具栏模板选择器
+            , limit: 10
+            , limits: [10, 20, 50, 100]
+            , parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.total, //解析数据长度
+                    "data": res.rows //解析数据列表
+                };
+            }
+            , response: {
+                statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
+            }
+            , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            , cols: [
+                [
+                    {field: 'name', width: '35%', title: '目录名称'}
+                    , {field: 'path', width: '30%', title: '目录地址'}
+                    , {field: 'eeNodeName', width: '15%', title: '目标节点'}
+                    , {fixed: 'right', title: '操作', toolbar: '#barDir'}
+                ]
+            ]
+        });
+
+        // 新增目录页面
+        $("#addDir").click(function () {
+            //页面层
+            layer.open({
+                type: 2,
+                title: '新增业务目录信息',
+                area: ['1000px', '560px'], //宽高
+                content: 'gx_file_dir_add.html'
+            });
+        });
+
+
+        table.on('tool(gx_dir)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                // 询问层
+                layer.confirm('真的删除行么', function (index) {
+                    $.ajax({
+                        url: ctx + 'gx/file/dir/delete?id=' + data.id + '&path=' + data.path,
+                        dataType: 'json',
+                        type: 'get',
+                        success: function () {
+                            tableFileDir.reload(); // 刷新表格
+                            layer.close(index);
+                        }
+                    });
+                });
+            } else if (obj.event === 'edit') {
+                //页面层
+                layer.open({
+                    type: 2,
+                    title: '编辑目录信息',
+                    area: ['1000px', '560px'], //宽高
+                    content: ctx + 'gx/file/dir/get?id=' + data.id
+                });
+            }
+        });
+
+
+        // 键盘抬起事件
+        // 输入框输入关键字自动查询数据
+        $(".container #nameInput").keyup(function () {
+            // 搜索条件
+            var nameInput = $('#nameInput').val();
+            table.reload('fileDirReload', {
+                method: 'get'
+                , url: ctx + "gx/file/dir/list/selective"
+                , where: {
+                    'name': nameInput
+                }
+                , page: {
+                    curr: 1
+                }
+            });
+        });
+
+
+    });
+
+
+</script>
+
+
+<script type="text/html" id="barNode">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+
+<script type="text/html" id="barDir">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+
+<body style="background-color: #e8eef2;padding: 0 20px;">
+
+<div class="panel">
+    <div class="panel-hdr">
+        <p>节点管理</p>
+    </div>
+    <blockquote class="layui-elem-quote">1、配置目标节点信息；<br>2、配置端口信息（对方安装项目的配置文件中，即application.properties）</blockquote>
+    <div style="padding: 10px 20px; ">
+
+        <div class="container">
+            <input type="text" class="search" placeholder="搜索" id="nodeDefinitionInput" autocomplete="off">
+            <button type="button" class="btn" id="searchNode"></button>
+        </div>
+        <div style="display: inline-block;float: right;padding-right: 20px;">
+            <button type="button" class="layui-btn layui-btn-normal" id="addNode" style="">添加</button>
+        </div>
+
+        <table class="layui-hide" id="gx_node" lay-filter="gx_node"></table>
+    </div>
+</div>
+
+<div class="panel">
+    <div class="panel-hdr">
+        <p>目录管理</p>
+    </div>
+    <blockquote class="layui-elem-quote">1、配置通道地址信息：本地发送的地址；<br>2、配置用户名、密码信息：即对方的通道信息；</blockquote>
+    <div style="padding: 10px 20px;">
+
+        <div class="container">
+            <input type="text" class="search" placeholder="搜索" id="nameInput" autocomplete="off">
+            <button type="button" class="btn" id="searchDirBtn"></button>
+        </div>
+        <div style="display: inline-block;float: right;padding-right: 20px;">
+            <button type="button" class="layui-btn layui-btn-normal" id="addDir" style="">添加</button>
+        </div>
+
+        <table class="layui-hide" id="gx_dir" lay-filter="gx_dir"></table>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.weking.app.gx.dao.GxNodeChannelDao">
+    <resultMap type="com.springboot.weking.app.gx.model.GxNodeChannel" id="gxNodeChannelResultMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="name" column="NAME" jdbcType="VARCHAR"/>
+        <result property="path" column="PATH" jdbcType="VARCHAR"/>
+        <result property="username" column="USERNAME" jdbcType="VARCHAR"/>
+        <result property="password" column="PASSWORD" jdbcType="VARCHAR"/>
+        <result property="note" column="NOTE" jdbcType="VARCHAR"/>
+        <result property="flag" column="FLAG" jdbcType="VARCHAR"/>
+        <result property="tm" column="TM" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="table_columns">
+		ID,
+		NAME,
+		PATH,
+		USERNAME,
+		PASSWORD,
+		NOTE,
+		FLAG,
+		TM
+    </sql>
+    <sql id="entity_properties">
+		#{id,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{path,jdbcType=VARCHAR},
+		#{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{note,jdbcType=VARCHAR},
+		#{flag,jdbcType=VARCHAR},
+		#{tm,jdbcType=TIMESTAMP}
+	</sql>
+
+
+    <insert id="insert" parameterType="com.springboot.weking.app.gx.model.GxNodeChannel">
+        insert into GX_NODE_CHANNEL(
+        <include refid="table_columns"/>
+        )
+        values (
+        <include refid="entity_properties"/>
+        )
+    </insert>
+
+    <select id="selectByPrimaryKey" resultMap="gxNodeChannelResultMap" parameterType="java.lang.String">
+        select
+        <include refid="table_columns"/>
+        from GX_NODE_CHANNEL
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateByPrimaryKey" parameterType="com.springboot.weking.app.gx.model.GxNodeChannel">
+        update GX_NODE_CHANNEL
+        <set>
+            <if test="name != null and name !=''">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null and path !=''">
+                PATH = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null and username !=''">
+                USERNAME = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password !=''">
+                PASSWORD = #{password,jdbcType=VARCHAR},
+            </if>
+            NOTE = #{note,jdbcType=VARCHAR},
+            <if test="flag != null and flag !=''">
+                FLAG = #{flag,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from GX_NODE_CHANNEL
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <update id="updateStatus" parameterType="com.springboot.weking.app.gx.model.GxNodeChannel">
+        update GX_NODE_CHANNEL
+        <set>
+            <if test="flag != null and flag !=''">
+                FLAG = #{flag,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectAll" parameterType="com.springboot.weking.app.gx.model.GxNodeChannel"
+            resultMap="gxNodeChannelResultMap"
+            useCache="false">
+        select
+        <include refid="table_columns"/>
+        from GX_NODE_CHANNEL where 1=1
+        <if test="name != null and name !=''">
+            NAME = #{name,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--条件查询-->
+    <select id="selectBySelective" resultMap="gxNodeChannelResultMap">
+        select
+        <include refid="table_columns"/>
+        from GX_NODE_CHANNEL
+        where 1 = 1
+        <if test="name != null and name !=''">
+            and NAME like '%${name}%'
+        </if>
+    </select>
+
+</mapper>

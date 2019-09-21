@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment :: header"></head>
+
+
+<script>
+    layui.use(['element', 'layer'], function () {
+        var element = layui.element;
+
+    });
+</script>
+
+<body style="padding: 20px;">
+
+<span style="font-size: 18px;">文件交换使用说明</span>
+<hr class="layui-bg-green" style="margin: 16px auto;">
+
+<div class="layui-collapse" style="">
+
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">节点管理</h2>
+        <div class="layui-colla-content">
+            <p>1、配置目标节点信息；</p>
+            <br>
+            <p>2、配置端口信息（对方安装项目的配置文件中，即application.properties）</p>
+        </div>
+    </div>
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">目录管理</h2>
+        <div class="layui-colla-content">
+            <p>1、配置通道地址信息：本地发送的地址；</p>
+            <br>
+            <p>2、配置用户名、密码信息：即对方的通道信息；</p>
+        </div>
+    </div>
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">通道管理</h2>
+        <div class="layui-colla-content">
+            <p>通道目录：接收发送文件的存放目录</p>
+            <br>
+            <p style="color: #bd0a01;">tips:
+                <br>
+                &emsp;1、此文件夹必须自己手动创建
+                <br>
+                &emsp;2、如果两个通道配置的用户名和密码一致，默认使用最后一条数据的通道
+            </p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

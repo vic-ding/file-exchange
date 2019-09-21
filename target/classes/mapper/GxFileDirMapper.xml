@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springboot.weking.app.gx.dao.GxFileDirDao">
+    <resultMap id="BaseResultMap" type="com.springboot.weking.app.gx.model.GxFileDir">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+        <result column="NAME" property="name" jdbcType="VARCHAR"/>
+        <result column="PATH" property="path" jdbcType="VARCHAR"/>
+        <result column="NOTE" property="note" jdbcType="VARCHAR"/>
+        <result column="NODE_CODE" property="nodeCode" jdbcType="VARCHAR"/>
+        <result column="FLAG" property="flag" jdbcType="VARCHAR"/>
+        <result column="USERNAME" property="username" jdbcType="VARCHAR"/>
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR"/>
+        <result column="NODE_NAME" property="eeNodeName" jdbcType="VARCHAR"/>
+        <result column="TM" property="tm" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, TYPE, NAME, PATH, NOTE,NODE_CODE,FLAG,USERNAME,PASSWORD,TM
+  </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from GX_FILE_DIR
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from GX_FILE_DIR
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+
+    <insert id="insert" parameterType="com.springboot.weking.app.gx.model.GxFileDir">
+    insert into GX_FILE_DIR (ID, TYPE, NAME, 
+      PATH, NOTE,NODE_CODE,FLAG,USERNAME,PASSWORD,TM)
+    values (#{id,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{path,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR},#{nodeCode,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR},
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{tm,jdbcType=TIMESTAMP})
+  </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.springboot.weking.app.gx.model.GxFileDir">
+        update GX_FILE_DIR
+        <set>
+            <if test="type != null">
+                TYPE = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                PATH = #{path,jdbcType=VARCHAR},
+            </if>
+            NOTE = #{note,jdbcType=VARCHAR},
+            <if test="nodeCode != null">
+                NODE_CODE = #{nodeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                FLAG = #{flag,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                USERNAME = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                PASSWORD = #{password,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+    select gfd.ID, gfd.TYPE, gfd.NAME, gfd.PATH, gfd.NOTE,gfd.NODE_CODE,gfd.FLAG,gfd.USERNAME,gfd.PASSWORD,gfd.TM,gn.NODE_NAME
+    from GX_FILE_DIR gfd
+    left join GX_NODE gn on gn.NODE_CODE = gfd.NODE_CODE
+  </select>
+
+    <!--    条件查询    -->
+    <select id="selectBySelective" resultMap="BaseResultMap">
+        select gfd.ID, gfd.TYPE, gfd.NAME, gfd.PATH,
+        gfd.NOTE,gfd.NODE_CODE,gfd.FLAG,gfd.USERNAME,gfd.PASSWORD,gfd.TM,gn.NODE_NAME
+        from GX_FILE_DIR gfd
+        left join GX_NODE gn on gn.NODE_CODE = gfd.NODE_CODE
+        where 1 = 1
+        <if test="name != null">
+            and gfd.NAME like '%${name}%'
+        </if>
+    </select>
+
+    <!--    校验目录地址的唯一性  -->
+    <select id="selectByPath" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from GX_FILE_DIR
+        where PATH = #{path,jdbcType=VARCHAR}
+    </select>
+</mapper>

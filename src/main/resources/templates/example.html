@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment :: header"></head>
+
+<script>
+    layui.use('element', function () {
+        var leftMenu = "";
+        $("#exchange").click(function () {
+            $("#leftMenu dd").eq(0).addClass("layui-this").siblings().removeClass("layui-this");
+        });
+
+        $("#leftMenu dd").click(function () {
+            leftMenu = this.id;
+            // 选中样式的切换
+            $(this).addClass("layui-this").siblings().removeClass("layui-this");
+
+            // 地址的链接
+            $("#mainFrame").attr("src", leftMenu + ".html");
+        });
+    });
+</script>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo" style="color:#FFB800;">Camel实现文件交换</div>
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item" id="exchange"><a href="index.html">共享交换</a></li>
+            <li class="layui-nav-item layui-this "><a href="example.html">示例</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">社区</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">后台模板</a></li>
+        </ul>
+
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test" id="leftMenu">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">文件交换1<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd id="wk_node" class="layui-this"><a href="javascript:;">节点管理</a></dd>
+                        <dd id="wk_node_channel"><a href="javascript:;">本地通道管理</a></dd>
+                        <dd><a href="javascript:;">业务目录配置</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">我的测试<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd id="wk_test_menu"><a href="javascript:;">测试一</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body" style="width: calc(100% - 200px);left: 200px;overflow: hidden">
+        <!-- 内容主体区域 -->
+        <div style="width: 100%;height:100%;padding: 15px;">
+            <iframe id="mainFrame" name="mainFrame" width="100%" height="100%" frameborder="0"
+                    noresize="noresize" src="wk_node.html"></iframe>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

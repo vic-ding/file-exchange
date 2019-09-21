@@ -1,0 +1,11 @@
+2019-09-21 15:59:46.192 [main] INFO  com.springboot.weking.Wk01Application - Starting Wk01Application on weking with PID 2916 (started by weking in D:\workspace\IntelliJ IDEA 2019.1\wk-01)
+2019-09-21 15:59:46.198 [main] INFO  com.springboot.weking.Wk01Application - No active profile set, falling back to default profiles: default
+2019-09-21 15:59:49.960 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$3fd0db51] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-21 15:59:50.056 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.apache.camel.spring.boot.CamelAutoConfiguration' of type [org.apache.camel.spring.boot.CamelAutoConfiguration$$EnhancerBySpringCGLIB$$61faa170] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-21 15:59:51.106 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8180 (http)
+2019-09-21 15:59:51.143 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8180"]
+2019-09-21 15:59:51.167 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2019-09-21 15:59:51.167 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-09-21 15:59:51.496 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/wk01] - Initializing Spring embedded WebApplicationContext
+2019-09-21 15:59:51.497 [main] INFO  org.springframework.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 5164 ms
+2019-09-21 15:59:53.214 [main] INFO  o.apache.camel.impl.converter.DefaultTypeConverter - Type converters loaded (core: 195, classpath: 1)

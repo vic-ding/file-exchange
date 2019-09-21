@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment :: header"></head>
+
+
+<style>
+    .layui-input-block {
+        margin-right: 50px;
+    }
+
+    .layui-input, .layui-textarea {
+        width: 68%;
+    }
+</style>
+<script type="text/javascript">
+    layui.use(['form', 'layedit'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit;
+
+
+        //创建一个编辑器
+        var editIndex = layedit.build('text_editor');
+        //自定义验证规则
+        form.verify({
+            content: function () {
+                layedit.sync(editIndex);
+            }
+        });
+
+        // 监听提交
+        form.on('submit(submitData)', function (data) {
+            var _url = ctx + "gx/node/channel/add";
+            $.ajax({
+                url: _url,
+                type: 'POST',
+                data: data.field,
+                success: function () {
+                    layer.msg("提交成功！");
+                    setTimeout(function () {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        parent.layui.table.reload('nodeChannelReload', {page: {curr: 1}}); // 父页面表格刷新
+                    }, 1000);
+                }
+            });
+            return false;
+        });
+
+        $("#btnClose").click(function () {
+            parent.layer.closeAll();
+        });
+
+    })
+</script>
+<body style="padding: 20px;">
+<form class="layui-form" action="" id="mainForm">
+    <input type="hidden" name="id">
+    <div class="layui-form-item">
+        <label class="layui-form-label">通道名称</label>
+        <div class="layui-input-block" style="position: relative;">
+            <input type="text" name="name" autocomplete="off" placeholder="请输入通道名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">通道目录</label>
+        <div class="layui-input-block">
+            <input type="text" name="path" autocomplete="off" placeholder="请输入通道目录" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block">
+            <input type="text" name="username" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-block">
+            <input type="text" name="password" autocomplete="off" placeholder="请输入密码" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <input type="radio" name="flag" value="1" title="启用" checked="">
+            <input type="radio" name="flag" value="0" title="禁用">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">说明</label>
+        <div class="layui-input-block">
+            <textarea class="layui-textarea layui-hide" name="note" lay-verify="content" id="text_editor"
+                      placeholder="请输入相关说明"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="text-align: right;">
+            <button class="layui-btn" lay-submit="" lay-filter="submitData">提交</button>
+            <button class="layui-btn layui-btn-primary" lay-filter="siteInfo" id="btnClose">取消</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springboot.weking.app.gx.dao.GxNodeDao">
+    <resultMap id="BaseResultMap" type="com.springboot.weking.app.gx.model.GxNode">
+        <id column="NODE_CODE" property="nodeCode" jdbcType="VARCHAR"/>
+        <result column="NODE_NAME" property="nodeDefinition" jdbcType="VARCHAR"/>
+        <result column="NODE_TYPE" property="nodeType" jdbcType="VARCHAR"/>
+        <result column="NODE_URL" property="nodeUrl" jdbcType="VARCHAR"/>
+        <result column="NODE_STATUS" property="nodeStatus" jdbcType="VARCHAR"/>
+        <result column="NODE_USER" property="nodeUser" jdbcType="VARCHAR"/>
+        <result column="NODE_MAIL" property="nodeMail" jdbcType="VARCHAR"/>
+        <result column="NODE_DESC" property="nodeDesc" jdbcType="VARCHAR"/>
+        <result column="NODE_IP" property="gxNodeIP" jdbcType="VARCHAR"/>
+        <result column="NODE_PORT" property="gxNodePort" jdbcType="VARCHAR"/>
+        <result column="DB_CODE" property="dbCode" jdbcType="VARCHAR"/>
+        <result column="TM" property="tm" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    NODE_CODE, NODE_NAME, NODE_TYPE, NODE_URL, NODE_STATUS, NODE_USER, NODE_MAIL, NODE_DESC,NODE_IP,NODE_PORT,DB_CODE,TM
+  </sql>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from GX_NODE
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from GX_NODE
+        where NODE_CODE = #{nodeCode,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.springboot.weking.app.gx.model.GxNode">
+    insert into GX_NODE (NODE_CODE, NODE_NAME, NODE_TYPE,
+      NODE_URL, NODE_STATUS, NODE_USER,
+      NODE_MAIL, NODE_DESC,NODE_IP,NODE_PORT,DB_CODE,TM)
+    values (#{nodeCode,jdbcType=VARCHAR}, #{nodeDefinition,jdbcType=VARCHAR}, #{nodeType,jdbcType=VARCHAR},
+      #{nodeUrl,jdbcType=VARCHAR}, #{nodeStatus,jdbcType=VARCHAR}, #{nodeUser,jdbcType=VARCHAR},
+      #{nodeMail,jdbcType=VARCHAR}, #{nodeDesc,jdbcType=VARCHAR},
+      #{gxNodeIP,jdbcType=VARCHAR}, #{gxNodePort,jdbcType=VARCHAR}, #{dbCode,jdbcType=VARCHAR}, #{tm,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from GX_NODE
+    where NODE_CODE = #{nodeCode,jdbcType=VARCHAR}
+  </delete>
+
+    <!--    条件查询    -->
+    <select id="selectAllBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from GX_NODE
+        where 1 = 1
+        <if test="nodeCode != null">
+            and NODE_CODE like '%${nodeCode}%'
+        </if>
+        <if test="nodeDefinition != null">
+            and NODE_NAME like '%${nodeDefinition}%'
+        </if>
+    </select>
+
+    <!--    修改    -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.springboot.weking.app.gx.model.GxNode">
+        update GX_NODE
+        <set>
+            <if test="nodeDefinition != null">
+                NODE_NAME = #{nodeDefinition,jdbcType=VARCHAR},
+            </if>
+            <if test="nodeType != null">
+                NODE_TYPE = #{nodeType,jdbcType=VARCHAR},
+            </if>
+            <if test="nodeUrl != null">
+                NODE_URL = #{nodeUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="nodeStatus != null">
+                NODE_STATUS = #{nodeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="nodeUser != null">
+                NODE_USER = #{nodeUser,jdbcType=VARCHAR},
+            </if>
+            <if test="nodeMail != null">
+                NODE_MAIL = #{nodeMail,jdbcType=VARCHAR},
+            </if>
+            NODE_DESC = #{nodeDesc,jdbcType=VARCHAR},
+            <if test="gxNodePort != null">
+                NODE_PORT = #{gxNodePort,jdbcType=VARCHAR},
+            </if>
+            <if test="gxNodeIP != null">
+                NODE_IP = #{gxNodeIP,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where NODE_CODE = #{nodeCode,jdbcType=VARCHAR}
+    </update>
+
+
+</mapper>
